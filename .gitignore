@@ -3,3 +3,5 @@ a.out
 
 riscv64-musl
 riscv64-musl.tar
+
+test/
