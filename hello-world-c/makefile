@@ -4,10 +4,13 @@ compile:
 	gcc -c main.c
 
 riscv64:
-	./riscv64-musl/bin/riscv64-buildroot-linux-musl-gcc --static main.c
+	riscv64-unknown-linux-gnu-gcc --static main.c
 
 link: compile
 	gcc -o main main.o
 
 run: link
 	./main
+
+clean:
+	rm a.out
