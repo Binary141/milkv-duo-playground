@@ -5,3 +5,10 @@ riscv64-musl
 riscv64-musl.tar
 
 *.img
+
+*.elf
+*.o
+*.bin
+
+build/
+images/
