@@ -1,13 +1,8 @@
 # note: this code comes from the sophgo forms as an example of creating your own bl33
 # https://forum.sophgo.com/t/use-opensbi-to-boot-your-own-operating-system/340
 
-#define UART0_THR 0x04140000
-#define UART0_LSR 0x04140014
-
-# .equ UART0_LSR, 0x04140014
-
-.section .text
-.global _start
+	.section .text
+	.global _start
 _start:
 	/* BL33 information */
 	j real_start
@@ -18,7 +13,13 @@ _start:
 	.quad 0x80200000  /* RUNADDR */
 	.word 0xdeadbeec
 	.balign 4
+	j real_start
+	.balign 4
 	/* Information end */
 
 real_start:
     j real_start
+
+.section .rodata
+str: 
+	.asciz "\nHello Milkv-duo!"
