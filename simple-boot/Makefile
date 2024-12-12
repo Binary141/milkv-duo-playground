@@ -9,7 +9,7 @@ build:
 clean:
 	$(MAKE) -C bl33 clean
 	$(MAKE) -C custom clean
-	$(MAKE) -C fsbl clean
+	$(MAKE) -C ../fsbl clean
 	rm -rf ./images/*
 	rm -rf ./root/*
 	rm -rf ./input/*
