@@ -12,7 +12,7 @@ int main() {
     int i = 0;
 
     while (1) {
-        uartputc_sync('b');
+        print("h");
 
         if (i != threshold) {
             i += 1;

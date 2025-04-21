@@ -47,4 +47,6 @@ void uartputc_sync(int c);
 
 void initclock();
 
+void print(const char*);
+
 #endif

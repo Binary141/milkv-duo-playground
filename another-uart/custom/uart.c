@@ -10,6 +10,22 @@ set_uart4_pins_sd1_gpio(void)
 }
 
 void
+print(const char* w)
+{
+    int i = 0;
+
+    while (1) {
+        if (w[i] == '\0') {
+            break;
+        }
+
+        uartputc_sync(w[i]);
+
+        i++;
+    }
+}
+
+void
 uartputc_sync(int c)
 {
   // wait for Transmit Holding Empty to be set in LSR.
