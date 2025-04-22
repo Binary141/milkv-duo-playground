@@ -31,13 +31,19 @@
 
 #define LCR_BAUD_LATCH (1<<7) // special mode to set baud rate
 #define LCR 0x00c                 // line control register
+#define LSR 0x014                 // line control register
 #define THR 0x000                 // line control register
 #define IER 0x004                 // line control register
+#define IIR 0x008                 // line control register
 #define FCR 0x008                 // line control register
+#define SRR 0x088                 // software reset register
+#define USR 0x07c                 // UART Status Register
+#define MCR 0x010                 // Modem Control Register
 #define IER_RX_ENABLE (1<<0)
 #define IER_TX_ENABLE (1<<1)
 #define FCR_FIFO_CLEAR (3<<1) // clear the content of the two FIFOs
 #define LCR_EIGHT_BITS (3<<0)
+#define LSR_TX_IDLE (1<<5)
 
 void uartinit(void);
 
