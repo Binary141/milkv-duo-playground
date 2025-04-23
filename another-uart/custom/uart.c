@@ -12,28 +12,33 @@ set_uart4_pins_sd1_gpio(void)
 void
 print(const char* w)
 {
-    int i = 0;
+  int i = 0;
 
-    while (1) {
-        if (w[i] == '\0') {
-            break;
-        }
-
-        uartputc_sync(w[i]);
-
-        i++;
+  while (1) {
+    if (w[i] == '\0') {
+      break;
     }
+
+    uartputc_sync(w[i]);
+
+    i++;
+  }
+
+  while((ReadReg(LSR) & (1<<6)) == 0) {
+      continue;
+  }
 }
 
 void
 uartputc_sync(int c)
 {
   // wait for Transmit Holding Empty to be set in LSR.
-  // while((ReadReg(LSR) & LSR_TX_IDLE) == 0)
-  //   ;
-  WriteReg(THR, c);
+  while((ReadReg(USR) & (1<<1)) == 0) {
+      continue;
+  }
 
-  // write to both uarts for now
+  WriteReg8(THR, c);
+
   WriteUART0Reg(THR, c);
 }
 
@@ -74,20 +79,25 @@ uartinit(void)
   WriteReg(LCR, LCR_BAUD_LATCH);
 
   // LSB for baud rate of 57.6k
-  WriteReg(THR, 0x1B);
+  WriteReg(DLL, 0x1B);
 
   // MSB for baud rate of 57.6k
-  WriteReg(IER, 0x00);
+  WriteReg(DLH, 0x00);
 
   // leave set-baud mode and set word length to 8 bits, no parity.
-  WriteReg(LCR, LCR_EIGHT_BITS);
+  WriteReg(LCR, 0x03);
 
   // reset and enable FIFOs.
-  WriteReg(FCR, (0<<0) | FCR_FIFO_CLEAR);
+  // WriteReg(FCR, (1<<0) | (1<<1) | (1<<2));
+  WriteReg(FCR, 0x07);
 
   // enable transmit and receive interrupts.
-  WriteReg(IER, IER_TX_ENABLE | IER_RX_ENABLE);
+  // WriteReg(IER, IER_TX_ENABLE | IER_RX_ENABLE);
+
+  WriteReg(IER, 0x00);
+
+  WriteReg(MCR, 0x00);
 
   // small sleep
-  for (volatile int d = 0; d < 10000; d++);
+  for (volatile int d = 0; d < 60000; d++);
 }

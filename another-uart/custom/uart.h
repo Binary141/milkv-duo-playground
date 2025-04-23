@@ -23,6 +23,9 @@
 #define WriteReg(reg, v) (*(Reg(reg)) = (v))
 #define ReadReg(reg) (*(Reg(reg)))
 
+#define WriteReg8(reg, val) (*(volatile uint8_t *)(UART4 + (reg)) = (val))
+#define ReadReg8(reg) (*(volatile uint8_t *)(UART4 + (reg)))
+
 // pinmux address for the pins that can use uart4
 #define REG_IOCTRL_SD1_GPIO1   (*(volatile uint32_t *)0x03001084L)  // For UART4_TX
 #define REG_IOCTRL_SD1_GPIO0   (*(volatile uint32_t *)0x03001088L)  // For UART4_RX
@@ -39,6 +42,8 @@
 #define SRR 0x088                 // software reset register
 #define USR 0x07c                 // UART Status Register
 #define MCR 0x010                 // Modem Control Register
+#define DLL 0x000                 // Modem Control Register
+#define DLH 0x004                 // Modem Control Register
 #define IER_RX_ENABLE (1<<0)
 #define IER_TX_ENABLE (1<<1)
 #define FCR_FIFO_CLEAR (3<<1) // clear the content of the two FIFOs
